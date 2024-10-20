@@ -10,7 +10,7 @@ export const styles = StyleSheet.create(
         },
         secondText: {
             textAlign: 'center',
-            fontSize: 30,
+            fontSize: 25,
             marginBottom: 20,
             fontWeight: "600"
         },
