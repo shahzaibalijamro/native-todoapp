@@ -45,6 +45,13 @@ export const styles = StyleSheet.create(
             borderRadius: 10,
             marginBottom: 30,
         },
+        editButton: {
+            alignItems: 'center',
+            backgroundColor: '#DDDDDD',
+            padding: 15,
+            borderRadius: 10,
+            // marginBottom: 30,
+        },
         container: {
             // flex: 1,
             width: '40%',

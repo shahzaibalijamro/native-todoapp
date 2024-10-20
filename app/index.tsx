@@ -5,6 +5,8 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 export default function Index() {
   const [inputVal, setInputVal] = useState('');
+  const [editTodoVal, seteditTodoVal] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [todos, setTodos] = useState<string[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false)
   const addTodo = () => {
@@ -19,10 +21,19 @@ export default function Index() {
     todos.splice(index, 1);
     setTodos([...todos])
   }
-  const editTodo = (index: number) => {
-    setIsModalVisible(true);
+  const editTodo = () => {
+    todos[currentIndex] = editTodoVal
+    setTodos([...todos])
   }
-  console.log(todos);
+  const openModal = (index:number) => {
+    setIsModalVisible(true)
+    setCurrentIndex(index)
+    seteditTodoVal(todos[index])
+  }
+  const hideModal = () => {
+    editTodo()
+    setIsModalVisible(!isModalVisible);
+  }
   return (
     <SafeAreaView>
       <View style={styles.centeredView}>
@@ -38,15 +49,16 @@ export default function Index() {
             <View style={styles.modalView}>
               <TextInput
                 style={styles.modalInput}
-                // onChangeText={setInputVal}
-                // value={inputVal}
+                onChangeText={seteditTodoVal}
+                value={editTodoVal}
                 placeholder="Edit Todo!"
                 keyboardType="default"
-              />
+              >
+              </TextInput>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setIsModalVisible(!isModalVisible)}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                style={[styles.editButton, styles.buttonClose]}
+                onPress={hideModal}>
+                <Text style={styles.textStyle}>Edit</Text>
               </Pressable>
             </View>
           </View>
@@ -80,7 +92,7 @@ export default function Index() {
                 {item}
               </Text>
               <View style={{ flexDirection: 'row', gap: 30 }}>
-                <TouchableOpacity onPress={() => editTodo(index)}>
+                <TouchableOpacity onPress={() => openModal(index)}>
                   <FontAwesome6 name="edit" size={26} color="green" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => deleteTodo(index)}>
